@@ -15,37 +15,37 @@ const (
 	algorithmName string = "ape"
 )
 
-type TradeConfig struct {
+type tradeConfig struct {
 }
 
-type ArbitrageTradeConfig struct {
+type arbitrageTradeConfig struct {
 }
 
-type Config struct {
-	Trade          *TradeConfig          `json:"trade"          yaml:"trade"          toml:"trade"`
-	ArbitrageTrade *ArbitrageTradeConfig `json:"arbitrageTrade" yaml:"arbitrageTrade" toml:"arbitrageTrade"`
+type config struct {
+	Trade          *tradeConfig          `json:"trade"          yaml:"trade"          toml:"trade"`
+	ArbitrageTrade *arbitrageTradeConfig `json:"arbitrageTrade" yaml:"arbitrageTrade" toml:"arbitrageTrade"`
 }
 
-type APE struct {
+type ape struct {
 	name           string
-	config         *TradeConfig
+	config         *tradeConfig
 }
 
-func (a *APE) GetName() (string) {
+func (a *ape) GetName() (string) {
 	return a.name
 }
 
-func (a *APE) Initialize(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
+func (a *ape) Initialize(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
 	return nil
 }
 
-func (a *APE) Update(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
+func (a *ape) Update(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
 	// trade
 	log.Printf("trade of ape")
 	return nil
 }
 
-func (a *APE) Finalize(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
+func (a *ape) Finalize(tradeContext exchange.TradeContext, notifier *notifier.Notifier) (error) {
 	return nil
 }
 
@@ -55,37 +55,37 @@ func newAPE(configDir string) (algorithm.TradeAlgorithm, error) {
 	if err != nil {
 		return nil, errors.Errorf("can not create configurator (config file path prefix = %v)", configFilePathPrefix)
 	}
-	config := new(Config)
-	err = cf.Load(config)
+	conf := new(config)
+	err = cf.Load(conf)
 	if err != nil {
 		return nil, errors.Errorf("can not load config (config file path prefix = %v)", configFilePathPrefix)
 	}
-	return &APE{
+	return &ape{
 		name:           algorithmName,
-		config:         config.Trade,
+		config:         conf.Trade,
 	}, nil
 }
 
-type ArbitrageAPE struct {
+type arbitrageAPE struct {
 	name           string
-	config         *ArbitrageTradeConfig
+	config         *arbitrageTradeConfig
 }
 
-func (a *ArbitrageAPE) GetName() (string) {
+func (a *arbitrageAPE) GetName() (string) {
 	return a.name
 }
 
-func (a *ArbitrageAPE) Initialize(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
+func (a *arbitrageAPE) Initialize(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
 	return nil
 }
 
-func (a *ArbitrageAPE) Update(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
+func (a *arbitrageAPE) Update(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
 	// arbitrage trade
 	log.Printf("arbitrage trade of ape")
 	return nil
 }
 
-func (a *ArbitrageAPE) Finalize(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
+func (a *arbitrageAPE) Finalize(exchanges map[string]exchange.Exchange, notifier *notifier.Notifier) (error) {
 	return nil
 }
 
@@ -95,14 +95,14 @@ func newArbitrageAPE(configDir string) (algorithm.ArbitrageTradeAlgorithm, error
 	if err != nil {
 		return nil, errors.Errorf("can not create configurator (config file path prefix = %v)", configFilePathPrefix)
 	}
-	config := new(Config)
-	err = cf.Load(config)
+	conf := new(config)
+	err = cf.Load(conf)
 	if err != nil {
 		return nil, errors.Errorf("can not load config (config file path prefix = %v)", configFilePathPrefix)
 	}
-	return &ArbitrageAPE{
+	return &arbitrageAPE{
 		name:           algorithmName,
-		config:         config.ArbitrageTrade,
+		config:         conf.ArbitrageTrade,
 	}, nil
 }
 
