@@ -113,5 +113,3 @@ func init() {
 func GetRegistrationInfo() (string, algorithm.TradeAlgorithmNewFunc, algorithm.ArbitrageTradeAlgorithmNewFunc) {
 	return algorithmName, newAPE, newArbitrageAPE
 }
-
-
